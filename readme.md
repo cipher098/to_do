@@ -1,3 +1,5 @@
+** Developed to-do app using Django with add, delete, update and automatic work status update features.**
+
 **Install postgre-sql and create database and user.**
 
 sudo apt-get install python-pip python-dev libpq-dev postgresql postgresql-contrib
