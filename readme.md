@@ -18,7 +18,7 @@ ALTER ROLE to_do_user SET default_transaction_isolation TO 'read committed';
 
 GRANT ALL PRIVILEGES ON DATABASE to_do to to_do_user;
 
-**Create environment and install dependencies. **
+**Create environment and install dependencies.**
 
 python3 -m venv ~/.virtualenvs/to_do_env
 
