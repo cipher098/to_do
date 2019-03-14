@@ -4,6 +4,10 @@ from .models import Work
 from .forms import WorkForm
 from django.contrib import messages
 
+import time
+import datetime
+import celery
+
 ToDo_params = [
 			   'work',
 			   'due_time',
@@ -64,40 +68,11 @@ def edit(request, work_id):
 		item = Work.objects.get(pk=work_id)
 		return render(request, 'edit.html', {'item': item})
 
-# def send_notification_mail():
-# 	subject = 'WORK DUE!!!'
-# 	message = ''
-# 	from_email = ''
-# 	recipient_email = ['']
-# 	send_mail(subject,
-# 		message,
-# 		from_email,
-# 		recipient_email,
-# 		fail_silently=False
-# 	)
-# 	to_email = kwargs.get('to_email')
-#     from_email = 'notify@todo.com>'
-#     subject = get_cleaned_email_subject('Work Due.')
-#     link = settings.API_DOMAIN_ROOT + str(reverse('auth:verify-email',
-#                                                   args=[activation_key,
-#                                                         user_type]))
-
-#     message = 'Your work is due today.'
-#     user_name = kwargs.get('user_name', '')
-#     button_text = 'Verify'
-#     button = get_html_email_button_dict(link, button_text)
-#     msg_plain, msg_html = get_rendered_email(user_name, message, button)
-
-#     try:
-#         send_mail(
-#             subject,
-#             msg_plain,
-#             from_email,
-#             [to_email],
-#             html_message=msg_html,
-#         )
-#     except:
-#         return function_response(False, 'Email could not be sent')
-
-#     return function_response(True, 'Email successfully sent')
-# send_booking_user_mail(**user_kwargs)
+@celery.decorators.periodic_task(run_every=datetime.timedelta(hours=10))
+def check_work_status():
+	current_time = datetime.datetime.now()
+	work_objects = Work.objects.filter(completed=False,due_time__lt=current_time).order_by('-due_time')
+	for item in work_objects:
+		item.completed = True
+		item.save()
+	return
