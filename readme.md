@@ -26,7 +26,7 @@ pip install django
 
 pip install django psycopg2
 
-pip install django-celery
+pip install celery
 
 sudo apt-get install redis-server
 
