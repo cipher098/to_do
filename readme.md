@@ -26,6 +26,10 @@ pip install django
 
 pip install django psycopg2
 
+pip install django-celery
+
+sudo apt-get install redis-server
+
 **Clone the project.**
 
 **MAKE INITIAL MIGRATIONS**
@@ -36,6 +40,18 @@ python manage.py makemigrations
 
 python manage.py migrate
 
+python manage.py migrate djcelery
+
 **CREATE SUPERUSER**
 
 python manage.py createsuperuser
+
+**Run server**
+
+python manage.py runserver
+
+**Run Celery worker**
+
+celery -A to_do worker -B
+
+
