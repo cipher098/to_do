@@ -30,6 +30,8 @@ pip install celery
 
 sudo apt-get install redis-server
 
+pip install redis
+
 **Clone the project.**
 
 **MAKE INITIAL MIGRATIONS**
