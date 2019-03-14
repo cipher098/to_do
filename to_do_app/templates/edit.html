@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	{% if item %}
+
+		<form class="form-inline my-2 my-lg-0" method="POST">
+	      {% csrf_token %}
+	      <input class="form-control mr-sm-2" type="search" placeholder="{{ item.work }}"
+	      values="{{ item.work }}" aria-label="Search" name="work">
+	      <input class="form-control mr-sm-2" type="datetime-local" placeholder="{{ item.due_time }}"
+	      values="{{ item.due_time }}" aria-label="Search" name="due_time">
+	      <select class="form-control mr-sm-2" name = "priority" values="{{ item.priority }}" >
+            <option value = "!" selected>!</option>
+            <option value = "!!">!!</option>
+            <option value = "!!!">!!!</option>
+          </select>
+	      <input type="hidden"values="{{ item.completed }}" name="completed">
+	      <input type="hidden"values="{{ item.created_time }}" name="created_time">
+	      <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Edit list</button>
+	    </form>
+    {% endif %}
+{% endblock %}    
